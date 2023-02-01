@@ -1,2 +1,2 @@
 # Webapp
-test
+test-ci
