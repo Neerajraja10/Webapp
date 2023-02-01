@@ -1,4 +1,4 @@
-name: CI actions
+name: CI actions second time
 
 on:
   pull_request:
