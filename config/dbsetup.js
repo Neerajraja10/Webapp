@@ -18,12 +18,12 @@ const sequelize = new Sequelize(
     }
 );
 
-let dbase = {};
+let db = {};
 
-dbase.sequelize = sequelize;
+db.sequelize = sequelize;
 //dbase.Sequelize = Sequelize;
 
-dbase.user = createUserModel(sequelize);
-dbase.product = createProductModel(sequelize);
+db.user = createUserModel(sequelize);
+db.product = createProductModel(sequelize);
 
-module.exports = dbase;
+module.exports = db;

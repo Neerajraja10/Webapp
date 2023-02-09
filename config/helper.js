@@ -1,7 +1,7 @@
 const bcrypt = require("bcrypt");
 // const dbFuncs = require('../models/dbFuncs');
 //const db = require('./dbSetup');
-const db = require('./dbSetup.js');
+const db = require('./dbSetup');
 
 const createPassHash = async (pass) => {
     const salt = await bcrypt.genSalt();

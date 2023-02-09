@@ -8,12 +8,11 @@ app.use(bodyParser.json());
 var userRoutes = require('./api-routes/routes');
 const productRoutes = require('./api-routes/productRoutes');
 
-app.use('/v1/user',userRoutes);
 const db = require('./config/dbSetup');
 db.user.hasMany(db.product, {foreignKey: "owner_user_id"});
 db.sequelize.sync({force: false})
   .then(() => console.log("Database setup complete."))
-  .catch((err) => console.log("Database setup failed.",err))
+  .catch(() => console.log("Database setup failed."))
 
 app.get('/healthz',function(req, res) {
   res.status(200).send(); 
