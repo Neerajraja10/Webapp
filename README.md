@@ -44,7 +44,7 @@ PATCH - http://localhost:3000/v1/product/{id}
 DELETE - http://localhost:3000/v1/product/{id}
 
 
-## Responds with following HTTP messages.
+## Responds with following HTTP messages
 
 "200 OK - The request was successful."
 
