@@ -1,5 +1,5 @@
 # Webapp Introduction
-Creating a api request using Nodejs and MYSQL2 and checking it in POSTMAN.
+Creating a api request using Nodejs and MYSQL2 and checking it in POSTMAN..
 
 ## Prerequisites
 
@@ -11,7 +11,6 @@ Creating a api request using Nodejs and MYSQL2 and checking it in POSTMAN.
 ## Dependencies to be installed 
 
 - npm i 
-- npm install express mysql2 bcrypt body-parser nodemon dotenv
 - start app by npm start
 
 
@@ -31,6 +30,18 @@ POST - http://localhost:3000/v1/user
 PUT - http://localhost:3000/v1/user/{id}
 
 GET - http://localhost:3000/v1/user/{id}
+
+GET - http://localhost:3000/v1/product/{id}
+
+POST - http://localhost:3000/v1/product
+
+PUT - http://localhost:3000/v1/product/{id}
+
+GET - http://localhost:3000/v1/product/{id}
+
+PATCH - http://localhost:3000/v1/product/{id}
+
+DELETE - http://localhost:3000/v1/product/{id}
 
 
 ## Responds with following HTTP messages
@@ -69,6 +80,12 @@ http://localhost:3000/v1/user/{id} where you should see: "201 Created".
 http://localhost:3000/v1/user/self/ where you should see: "204 No Content".
 
 http://localhost:3000/v1/user/self where you should use: "204 No Content".
+
+http://localhost:3000/v1/product, where you should see: "200 OK".
+
+http://localhost:3000/v1/product/{id} where you should see: "201 Created".
+
+http://localhost:3000/v1/product/self/ where you should see: "204 No Content".
 
 
 Please create a pull request with a detailed description of changes.
