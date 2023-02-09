@@ -4,7 +4,7 @@ Creating a api request using Nodejs and MYSQL2 and checking it in POSTMAN.
 ## Prerequisites
 
 1.Visual studio code (IDE)
-2.POSTMAN.
+2.POSTMAN
 3.Database - MySQL
 4.Node.js
 
