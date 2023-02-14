@@ -1,7 +1,7 @@
 # Webapp Introduction
 Creating a api request using Nodejs and MYSQL2 and checking it in POSTMAN..
 
-## Prerequisites
+## Prerequisites..
 
 1.Visual studio code (IDE)
 2.POSTMAN
