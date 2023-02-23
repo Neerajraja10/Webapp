@@ -7,6 +7,7 @@ Creating a api request using Nodejs and MYSQL2 and checking it in POSTMAN..
 2.POSTMAN
 3.Database - MySQL
 4.Node.js
+..
 
 ## Dependencies to be installed 
 
