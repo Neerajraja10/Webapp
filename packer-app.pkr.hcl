@@ -50,7 +50,7 @@ variable "DATABASE" {
 
 variable "ami_users" {
   type    = list(string)
-  default = ["904970591130"]
+  default = ["943214608801"]
 }
 
 source "amazon-ebs" "app-ami" {
