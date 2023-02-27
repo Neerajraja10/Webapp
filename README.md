@@ -90,3 +90,4 @@ http://localhost:3000/v1/product/self/ where you should see: "204 No Content".
 
 
 Please create a pull request with a detailed description of changes.
+dfghkljhgfdghlk
