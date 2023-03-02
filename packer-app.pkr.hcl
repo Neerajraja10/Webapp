@@ -15,42 +15,42 @@ variable "ssh_username" {
 
 variable "vpc_id" {
   type    = string
-  default = "vpc-01276ec252f7960ce"
+  default = "vpc-0532e1f31dabaecb2"
 }
 
 variable "subnet_id" {
   type    = string
-  default = "subnet-051481c62c6ff86a6"
+  default = "subnet-0d2a8229cc8789edd"
 }
 
-// variable "DBUSER" {
-//   type = string
-// }
+variable "DBUSER" {
+  type = string
+}
 
-// variable "DBPASS" {
-//   type = string
-// }
+variable "DBPASS" {
+  type = string
+}
 
 
-// variable "DBHOST" {
-//   type = string
-// }
+variable "DBHOST" {
+  type = string
+}
 
-// variable "PORT" {
-//   type = string
-// }
+variable "PORT" {
+  type = string
+}
 
-// variable "DBPORT" {
-//   type = string
-// }
+variable "DBPORT" {
+  type = string
+}
 
-// variable "DATABASE" {
-//   type = string
-// }
+variable "DATABASE" {
+  type = string
+}
 
 variable "ami_users" {
   type    = list(string)
-  default = ["680696435068"]
+  default = ["943214608801"]
 }
 
 source "amazon-ebs" "app-ami" {
@@ -98,7 +98,7 @@ build {
     // ]
 
     script = "./webapp.sh"
-    // environment_vars = ["DBUSER=${var.DBUSER}", "DBPASS=${var.DBPASS}", "DBHOST=${var.DBHOST}", "PORT=${var.PORT}", "DATABASE=${var.DATABASE}", "DBPORT=${var.DBPORT}"]
+    environment_vars = ["DBUSER=${var.DBUSER}", "DBPASS=${var.DBPASS}", "DBHOST=${var.DBHOST}", "PORT=${var.PORT}", "DATABASE=${var.DATABASE}", "DBPORT=${var.DBPORT}"]
 
   }
 }
