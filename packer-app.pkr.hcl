@@ -55,7 +55,7 @@ variable "ami_users" {
 
 source "amazon-ebs" "app-ami" {
   region          = "${var.aws_region}"
-  ami_name        = "ami-1"
+  ami_name        = "${var.source_ami}"
   ami_description = "AMI test"
   ami_users       =   var.ami_users
   ami_regions = [
@@ -92,10 +92,7 @@ build {
   }
 
   provisioner "shell" {
-    // environment_vars = [
-    //   "DEBIAN_FRONTEND=noninteractive",
-    //   "CHECKPOINT_DISABLE=1"
-    // ]
+  
 
     script = "./webapp.sh"
     environment_vars = ["DBUSER=${var.DBUSER}", "DBPASS=${var.DBPASS}", "DBHOST=${var.DBHOST}", "PORT=${var.PORT}", "DATABASE=${var.DATABASE}", "DBPORT=${var.DBPORT}"]

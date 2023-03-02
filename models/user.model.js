@@ -1,5 +1,4 @@
 const { DataTypes } = require("sequelize");
-
 const createUserModel = (sequelize) => {
     let User = sequelize.define("user", {
         id: {
@@ -40,8 +39,6 @@ const createUserModel = (sequelize) => {
     {
         initialAutoIncrement: 1,
     });
-
     return User;
 }
-
 module.exports = createUserModel;
