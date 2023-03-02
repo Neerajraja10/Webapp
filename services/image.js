@@ -32,11 +32,11 @@ const upload = async (req,res) => {
         // Uploading files to the bucket
         await s3.upload(uploadParams).promise();
 
-        fs.readdir('assets', (err, files) => {
+        fs.readdir('assets_temp', (err, files) => {
             if (err) throw err;
           
             for (const file of files) {
-              fs.unlink(path.join('assets', file), (err) => {
+              fs.unlink(path.join('assets_temp', file), (err) => {
                 if (err) throw err;
               });
             }
