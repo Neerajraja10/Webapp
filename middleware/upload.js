@@ -5,7 +5,7 @@ let key;
 let storage = multer.diskStorage({
   destination: (req, file, cb) => {
     key = req;
-    cb(null, __dirname + "/../assets_temp");
+    cb(null, __dirname + "/../assets");
   },
   filename: (req, file, cb) => {
     cb(null, file.originalname);
