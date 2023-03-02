@@ -1,25 +1,26 @@
 const helper = require('../config/helper');
 const db = require('../config/dbSetup');
 
-const createNewProduct = async (req, res) => { // Create new product function
+const createNewProduct = async (req, res) => {
     if(!req.body.name || 
-        !req.body.description || 
-        !req.body.sku || 
-        !req.body.manufacturer ||
-        !req.body.quantity ||
-        (req.body.quantity && (req.body.quantity < 0 || typeof req.body.quantity === 'string' || req.body.quantity > 100))) {
-            return res.status(400).json({
-                message: "Bad request"
-            });
-        }  
+    !req.body.description || 
+    !req.body.sku || 
+    !req.body.manufacturer ||
+    req.body.quantity===null ||
+    (req.body.quantity && (req.body.quantity < 0 || typeof req.body.quantity === 'string' || req.body.quantity > 100))) {
+        return res.status(400).json({
+            message: "Bad request"
+        });
+    }    
 
     try{
-        let productObj = await db.product.findOne({where:{sku:req.body.sku}});
-        if(productObj) {
+        let prodObj = await db.product.findOne({where:{sku:req.body.sku}});
+        if(prodObj) {
             return res.status(400).json({
-                message: "Bad request! sku value already exists."
+                message: "Bad request!! The entered sku value already exists."
             });
         }
+
         let {userName, pass} = helper.getDecryptedCreds(req.headers.authorization);
         let user = await db.user.findOne({where:{username:userName}});
 
@@ -50,30 +51,29 @@ const createNewProduct = async (req, res) => { // Create new product function
         res.status(400).send("Bad Request");
     }
 }
-const putProductInfo = async (req, res) => {  // Create new product function
+
+const putProductInfo = async (req, res) => {
     if(!req.body.name || 
-        !req.body.description || 
-        !req.body.sku || 
-        !req.body.manufacturer ||
-        !req.body.quantity ||
-        (req.body.quantity && (req.body.quantity < 0 || typeof req.body.quantity === 'string'|| req.body.quantity > 100)) || 
-        Object.keys(req.body).length > 5) {
-            return res.status(400).json({
-                message: "Bad request"
-            });
-        }  
+    !req.body.description || 
+    !req.body.sku || 
+    !req.body.manufacturer ||
+    req.body.quantity===null ||
+    (req.body.quantity && (req.body.quantity < 0 || typeof req.body.quantity === 'string' || req.body.quantity > 100)) ||
+    Object.keys(req.body).length > 5) {
+        return res.status(400).json({
+            message: "Bad request"
+        });
+    }   
 
     let id = req.params.id;
 
-    try{ 
-        
-        let productObj = await db.product.findOne({where:{sku:req.body.sku}});
-        if(productObj && productObj.dataValues.id !== id) {
+    try{
+        let prodObj = await db.product.findOne({where:{sku:req.body.sku}});
+        if(prodObj && prodObj.dataValues.id != id) {
             return res.status(400).json({
-                message: "Bad request! sku value already exists."
+                message: "Bad request!! The entered sku value already exists."
             });
         }
-    
 
         await db.product.update({
             "name": req.body.name,
@@ -93,7 +93,6 @@ const putProductInfo = async (req, res) => {  // Create new product function
     }
 }
 
-
 const patchProductInfo = async (req, res) => {
     if((req.body.quantity && (req.body.quantity < 0 || typeof req.body.quantity === 'string' || req.body.quantity > 100))) {
         return res.status(400).json({
@@ -105,9 +104,10 @@ const patchProductInfo = async (req, res) => {
 
     let fieldData = {};
     let fieldKeys = ["name","description","sku","manufacturer","quantity"];
+    
     let nullCheck = false;
     Object.keys(req.body).forEach((key) => {
-        if(!req.body[key]) {
+        if(!req.body[key] && req.body[key] !== 0) {
             nullCheck = true;
         }
         if(fieldKeys.includes(key)) {
@@ -120,14 +120,15 @@ const patchProductInfo = async (req, res) => {
     }
 
     try{
-        if(req.body.sku){
-        let productObj = await db.product.findOne({where:{sku:req.body.sku}});
-        if(productObj && productObj.dataValues.id != id) {
-            return res.status(400).json({
-                message: "Bad request! sku value already exists."
-            });
+        if(req.body.sku) {
+            let prodObj = await db.product.findOne({where:{sku:req.body.sku}});
+            if(prodObj && prodObj.dataValues.id != id) {
+                return res.status(400).json({
+                    message: "Bad request!! The entered sku value already exists."
+                });
+            }
         }
-    }
+
         await db.product.update(fieldData,{
             where:{
                 id:id
@@ -142,8 +143,8 @@ const patchProductInfo = async (req, res) => {
 
 const deleteProduct = async (req, res) => {
 
-    if (req._body){
-        return res.status(400).send("Bad Request")
+    if(req._body) {
+        return res.status(400).send("Bad Request");
     }
 
     let id = req.params.id;
@@ -156,15 +157,16 @@ const deleteProduct = async (req, res) => {
         })
         return res.status(204).send(); 
     }catch(err) {
-        res.status(400).send("Bad Request");
         console.log("DB Error ", err);
+        res.status(400).send("Bad Request");
     }
 }
 
 const getProduct = async(req, res) => {
-    if (req._body){
-        return res.status(400).send("Bad Request")
+    if(req._body) {
+        return res.status(400).send("Bad Request");
     }
+    
     let id = req.params.id;
 
     try{
@@ -191,8 +193,8 @@ const getProduct = async(req, res) => {
         }
         return res.status(200).json(result); 
     }catch(err) {
-        res.status(400).send("Bad Request");
         console.log("DB Error ", err);
+        res.status(400).send("Bad Request");
     }
 }
 

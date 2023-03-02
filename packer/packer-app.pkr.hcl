@@ -23,31 +23,6 @@ variable "subnet_id" {
   default = "subnet-0d2a8229cc8789edd"
 }
 
-variable "DBUSER" {
-  type = string
-}
-
-variable "DBPASS" {
-  type = string
-}
-
-
-variable "DBHOST" {
-  type = string
-}
-
-variable "PORT" {
-  type = string
-}
-
-variable "DBPORT" {
-  type = string
-}
-
-variable "DATABASE" {
-  type = string
-}
-
 variable "ami_users" {
   type    = list(string)
   default = ["943214608801"]
@@ -55,7 +30,7 @@ variable "ami_users" {
 
 source "amazon-ebs" "app-ami" {
   region          = "${var.aws_region}"
-  ami_name        = "ami-1"
+  ami_name        = "amiassign${formatdate("YYYY_MM_DD_hh_mm_ss", timestamp())}"
   ami_description = "AMI test"
   ami_users       =   var.ami_users
   ami_regions = [
@@ -73,7 +48,7 @@ source "amazon-ebs" "app-ami" {
   ssh_username  = "${var.ssh_username}"
   subnet_id     = "${var.subnet_id}"
   vpc_id = "${var.vpc_id}"
-  profile       = "dev"
+  profile       = "dev"  
 
   launch_block_device_mappings {
     delete_on_termination = true
@@ -92,13 +67,6 @@ build {
   }
 
   provisioner "shell" {
-    // environment_vars = [
-    //   "DEBIAN_FRONTEND=noninteractive",
-    //   "CHECKPOINT_DISABLE=1"
-    // ]
-
-    script = "./webapp.sh"
-    environment_vars = ["DBUSER=${var.DBUSER}", "DBPASS=${var.DBPASS}", "DBHOST=${var.DBHOST}", "PORT=${var.PORT}", "DATABASE=${var.DATABASE}", "DBPORT=${var.DBPORT}"]
-
+    script = "./packer/webapp.sh"
   }
 }

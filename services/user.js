@@ -1,7 +1,7 @@
 const helper = require('../config/helper');
 const db = require('../config/dbSetup');
 
-const newUser = async ( req, res) => {
+const createNewUser = async ( req, res) => {
     //Check if req object is correct and throw err as approriate.
     let check = true;
     if(!req.body.first_name) {
@@ -59,6 +59,7 @@ const newUser = async ( req, res) => {
         return res.status(201).json(result);
     }catch(err) {
         console.log("DB Error");
+        res.status(400).send("Bad Request");
     }
 }
 
@@ -82,7 +83,7 @@ const getUser = async (req, res) => {
         let result = await db.user.findOne({where:{id:id}});
         if (!result) {
             return res.status(400).json({
-              message: "Bad request"});
+              message: "Bad Request"});
         }
         let fResult = {
             id:result.id,
@@ -96,6 +97,7 @@ const getUser = async (req, res) => {
         return res.status(200).json(fResult); 
     }catch(err) {
         console.log("DB Error");
+        res.status(400).send("Bad Request");
     }
 }
 
@@ -128,7 +130,6 @@ const updateUser = async (req, res) => {
     let id = req.params.id;
     let fName = req.body.first_name;
     let lName = req.body.last_name;
-    console.log("test");
     
     let pass = await helper.createPassHash(req.body.password);
 
@@ -145,11 +146,12 @@ const updateUser = async (req, res) => {
         return res.status(204).send(); 
     }catch(err) {
         console.log('DB Error');
+        res.status(400).send("Bad Request");
     }
 }
 
 module.exports = {
-    newUser,
+    createNewUser,
     getUser,
     updateUser
 }
