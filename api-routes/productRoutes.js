@@ -15,6 +15,8 @@ router.patch('/:id', helper.pAuthCheck, product.patchProductInfo);
 
 router.delete('/:id', helper.pAuthCheck, product.deleteProduct);
 
+// Image routes.
+
 router.post('/:id/image', helper.pAuthCheck, image.upload);
 router.get('/:id/image/:imageId', helper.pAuthCheck, helper.imAuth, image.getImageMeta);
 router.delete('/:id/image/:imageId', helper.pAuthCheck, helper.imAuth, image.delImage);

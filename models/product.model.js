@@ -1,4 +1,5 @@
 const { DataTypes } = require("sequelize");
+
 const createProductModel = (sequelize) => {
     let Product = sequelize.define("product", {
         id: {
@@ -46,4 +47,5 @@ const createProductModel = (sequelize) => {
 
     return Product;
 }
+
 module.exports = createProductModel;

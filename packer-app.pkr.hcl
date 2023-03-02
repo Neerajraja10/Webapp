@@ -15,47 +15,47 @@ variable "ssh_username" {
 
 variable "vpc_id" {
   type    = string
-  default = "vpc-0532e1f31dabaecb2"
+  default = "vpc-01276ec252f7960ce"
 }
 
 variable "subnet_id" {
   type    = string
-  default = "subnet-0d2a8229cc8789edd"
+  default = "subnet-051481c62c6ff86a6"
 }
 
-variable "DBUSER" {
-  type = string
-}
+// variable "DBUSER" {
+//   type = string
+// }
 
-variable "DBPASS" {
-  type = string
-}
+// variable "DBPASS" {
+//   type = string
+// }
 
 
-variable "DBHOST" {
-  type = string
-}
+// variable "DBHOST" {
+//   type = string
+// }
 
-variable "PORT" {
-  type = string
-}
+// variable "PORT" {
+//   type = string
+// }
 
-variable "DBPORT" {
-  type = string
-}
+// variable "DBPORT" {
+//   type = string
+// }
 
-variable "DATABASE" {
-  type = string
-}
+// variable "DATABASE" {
+//   type = string
+// }
 
 variable "ami_users" {
   type    = list(string)
-  default = ["943214608801"]
+  default = ["680696435068"]
 }
 
 source "amazon-ebs" "app-ami" {
   region          = "${var.aws_region}"
-  ami_name        = "${var.source_ami}"
+  ami_name        = "ami-1"
   ami_description = "AMI test"
   ami_users       =   var.ami_users
   ami_regions = [
@@ -92,10 +92,13 @@ build {
   }
 
   provisioner "shell" {
-  
+    // environment_vars = [
+    //   "DEBIAN_FRONTEND=noninteractive",
+    //   "CHECKPOINT_DISABLE=1"
+    // ]
 
     script = "./webapp.sh"
-    environment_vars = ["DBUSER=${var.DBUSER}", "DBPASS=${var.DBPASS}", "DBHOST=${var.DBHOST}", "PORT=${var.PORT}", "DATABASE=${var.DATABASE}", "DBPORT=${var.DBPORT}"]
+    // environment_vars = ["DBUSER=${var.DBUSER}", "DBPASS=${var.DBPASS}", "DBHOST=${var.DBHOST}", "PORT=${var.PORT}", "DATABASE=${var.DATABASE}", "DBPORT=${var.DBPORT}"]
 
   }
 }
