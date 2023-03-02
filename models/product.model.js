@@ -39,7 +39,7 @@ const createProductModel = (sequelize) => {
     },
     {
         updatedAt: 'date_last_updated',
-        created: 'date_added',
+        createdAt: 'date_added',
     },
     {
         initialAutoIncrement: 1,
