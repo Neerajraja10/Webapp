@@ -31,7 +31,7 @@ GET
 POST
 PUT
 PATCH
-DELETE
+DELETE.
 HTTP messages that can be received include:
 
 "200 OK"
