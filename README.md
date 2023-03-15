@@ -4,7 +4,7 @@ This guide will walk you through creating an Amazon Machine Image (AMI) using Pa
 
 
 Visual Studio Code or any other IDE
-POSTMAN
+POSTMAN..
 MySQL or any other database management system
 Node.js
 AWS account
