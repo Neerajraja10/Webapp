@@ -3,7 +3,7 @@ var app = express();
 var bodyParser = require("body-parser");
 const methodOverride = require('method-override');
 const logger = require("../logger/logger-index");
-const SDC = require('statsd-client');
+//const SDC = require('statsd-client');
 app.use(bodyParser.json());
 
 const userRoutes = require('./api-routes/userRoutes');
@@ -18,9 +18,9 @@ db.sequelize.sync({force: false})
 
 app.get('/healthz',function(req, res) {
   logger.info("/health running fine");
-  sdc.timing('health.timeout', start);
+ // sdc.timing('health.timeout', start);
     res.status(200).send(); 
-    sdc.increment('endpoint.health');
+   // sdc.increment('endpoint.health');
 });
 
 app.use('/v1/user',userRoutes);
