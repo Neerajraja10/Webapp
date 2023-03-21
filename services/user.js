@@ -1,5 +1,6 @@
 const helper = require('../config/helper');
 const db = require('../config/dbSetup');
+const logger = require("../logger/logger-index");
 
 const createNewUser = async ( req, res) => {
     //Check if req object is correct and throw err as approriate.
@@ -47,7 +48,7 @@ const createNewUser = async ( req, res) => {
             account_created: new Date().toISOString(),
             account_updated: new Date().toISOString()
         });
-
+logger.info("Create user 200")
         let result = {
             id:data.dataValues.id,
             username: data.dataValues.username,
@@ -58,6 +59,7 @@ const createNewUser = async ( req, res) => {
         }
         return res.status(201).json(result);
     }catch(err) {
+        logger.info("/create new user 400");
         console.log("DB Error");
         res.status(400).send("Bad Request");
     }

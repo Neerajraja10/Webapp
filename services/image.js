@@ -5,6 +5,7 @@ const AWS = require('aws-sdk');
 const uploadFile = require("../middleware/upload");
 const db = require('../config/dbSetup');
 const BUCKET_NAME = process.env.BUCKETNAME;
+const logger = require("../logger/logger-index");
 
 const helper = require('../config/helper')
 
@@ -61,6 +62,7 @@ const upload = async (req,res) => {
 
         res.status(201).json(result);
     } catch (err) {
+        logger.error("Could not upload the file: 500");
         res.status(500).send({
           message: `Could not upload the file: ${req.file.originalname}. ${err}`,
         });
