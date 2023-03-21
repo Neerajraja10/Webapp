@@ -5,7 +5,7 @@ const AWS = require('aws-sdk');
 const uploadFile = require("../middleware/upload");
 const db = require('../config/dbSetup');
 const BUCKET_NAME = process.env.BUCKETNAME;
-const logger = require("../logger/logger-index");
+const logger = require("../logger/loggerindex");
 
 const helper = require('../config/helper')
 

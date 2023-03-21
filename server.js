@@ -2,7 +2,7 @@ var express = require("express");
 var app = express();
 var bodyParser = require("body-parser");
 const methodOverride = require('method-override');
-const logger = require("../logger/logger-index");
+const logger = require("./logger/loggerindex");
 //const SDC = require('statsd-client');
 app.use(bodyParser.json());
 
@@ -17,10 +17,11 @@ db.sequelize.sync({force: false})
   .catch((err) => console.log("Database setup failed.", err))
 
 app.get('/healthz',function(req, res) {
-  logger.info("/health running fine");
  // sdc.timing('health.timeout', start);
+  logger.info("/health running fine");
+ //sdc.increment('endpoint.health');
     res.status(200).send(); 
-   // sdc.increment('endpoint.health');
+   
 });
 
 app.use('/v1/user',userRoutes);
