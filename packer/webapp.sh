@@ -11,11 +11,11 @@ sudo yum install -y nodejs
 sudo yum install amazon-cloudwatch-agent -y 
 
 #start cloudwatch agent
-# sudo /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-ctl \
-# -a fetch-config \
-# -m ec2 \
-# -c file:/home/ec2-user/Webapp/cloud-watch/configure.json \
-# -s
+sudo /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-ctl \
+-a fetch-config \
+-m ec2 \
+-c file:/home/ec2-user/Webapp/cloud-watch/configure.json \
+-s
 
 unzip webapp.zip -d webapp
 cd /home/ec2-user/webapp
