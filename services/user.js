@@ -3,7 +3,9 @@ const db = require('../config/dbSetup');
 const logger = require("../logger/loggerindex");
 
 const createNewUser = async ( req, res) => {
-    //Check if req object is correct and throw err as approriate.
+    //helper.logger.info("POST - User");
+    helper.statsdClient.increment('POST_userdetails');
+   
     let check = true;
     if(!req.body.first_name) {
         check = false;
@@ -66,6 +68,8 @@ logger.info("Create user 200")
 }
 
 const getUser = async (req, res) => {
+   // helper.logger.info(`Get - user for id - ${req.params.id}.`);
+    helper.statsdClient.increment('POST_getdetails');
     //Check if req object is correct and throw err as approriate.
     check = true;
 
@@ -104,7 +108,9 @@ const getUser = async (req, res) => {
 }
 
 const updateUser = async (req, res) => {
-    //Check if req object is correct and throw err as approriate
+    //helper.logger.info(`UPDATE - user for id - ${req.params.id}.`);
+    helper.statsdClient.increment('POST_user');
+    
     let check = true;
 
     if(!req.body.first_name) {

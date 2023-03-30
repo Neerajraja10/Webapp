@@ -12,6 +12,8 @@ const helper = require('../config/helper')
 const s3 = new AWS.S3()
 
 const upload = async (req,res) => {
+    helper.logger.info("Image posting");
+    helper.statsdClient.increment('POST_C_image');
     try {
         await uploadFile(req, res);
     
@@ -70,8 +72,10 @@ const upload = async (req,res) => {
 };
 
 const getImageMeta = async (req, res) => {
+  //  helper.logger.info("GET - Image for id - ", req.params.imageId);
+    helper.statsdClient.increment('GET_C_image');
     let id = req.params.imageId;
-
+   
     try{
         let data = await db.image.findOne({
             where:{
@@ -98,6 +102,8 @@ const getImageMeta = async (req, res) => {
 }
 
 const delImage = async (req, res) => {
+    //helper.logger.info("DELETE - Image for id - ", req.params.imageId);
+    helper.statsdClient.increment('DELETE_C_image');
     let id = req.params.imageId;
     try {
         let data = await db.image.findOne({
@@ -125,6 +131,8 @@ const delImage = async (req, res) => {
 }
 
 const getAllImages = async (req, res) => {
+    //helper.logger.info("GET -All Image for product id - ", req.params.id);
+    helper.statsdClient.increment('Counter-GET_all_image');
     let id = req.params.id;
 
     try {
@@ -140,7 +148,7 @@ const getAllImages = async (req, res) => {
             delete res.dataValues.date_last_updated
             result.push(res.dataValues);
         });
-
+        //helper.logger.info("Image Successfully fetched - ", );
         return res.status(200).json(result); 
     }catch(err) {
         console.log("DB Error ", err);

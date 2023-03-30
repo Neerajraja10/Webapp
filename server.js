@@ -17,9 +17,8 @@ db.sequelize.sync({force: false})
   .catch((err) => console.log("Database setup failed.", err))
 
 app.get('/healthz',function(req, res) {
- // sdc.timing('health.timeout', start);
+  helper.statsdClient.increment('health_counter');
   logger.info("/health running fine");
- //sdc.increment('endpoint.health');
     res.status(200).send(); 
    
 });
@@ -31,5 +30,13 @@ app.use(methodOverride())
 app.use((err, req, res, next) => {
   return res.status(400).json({message: "Bad Request"});
 })
+
+process.on('terminate', () => {
+  process.on('terminate', () => {
+    // run after all terminate handlers that were added before exit
+    console.log("exit")
+    helper.statsdClient.socket.close();
+  });
+});
 
 module.exports = app;

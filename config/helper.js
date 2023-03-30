@@ -1,6 +1,14 @@
 const bcrypt = require("bcrypt");
 // const dbFuncs = require('../models/dbFuncs');
 const db = require('../config/dbSetup');
+const StatsD = require('node-statsd');
+const logger = require("../logger/loggerindex");
+const statsdClient = new StatsD();
+
+// const logger = winston.createLogger({
+//   format: winston.format.json(),
+//   transports: [new winston.transports.File({ filename: '/var/log/csye6225.log'})],
+// });
 
 const createPassHash = async (pass) => {
     const salt = await bcrypt.genSalt();
@@ -24,6 +32,7 @@ const uAuthCheck = async (req, res, next) => {
 
   //Check if auth header is present and is a basic auth header.
   if (!req.headers.authorization || req.headers.authorization.indexOf("Basic ") === -1) {
+    logger.error("header Auth missing - Unauthorized");
     return res.status(401).json({ message: "Unauthorized" });
   }
 
@@ -35,6 +44,7 @@ const uAuthCheck = async (req, res, next) => {
   let userAccCheck = await validUser(userName, pass);
 
   if (!userName || !pass || !userAccCheck) {
+    logger.error("details of user are not correct - Unauthorized");
     return res.status(401).json({
       message: "Unauthorized",
     });
@@ -43,6 +53,7 @@ const uAuthCheck = async (req, res, next) => {
   //Check if user creds match the user at id.
   let dbCheck = await dbCredVal(userName, pass,id);
   if(dbCheck) {
+    logger.error(`details of user incorrect- ${dbCheck}`);
       return res.status((dbCheck=='Forbidden')?403:404).json({
         message: dbCheck,
       });
@@ -54,6 +65,7 @@ const uAuthCheck = async (req, res, next) => {
 const pAuthCheck = async (req, res, next) => {
   //Check if auth header is present and is a basic auth header.
   if (!req.headers.authorization || req.headers.authorization.indexOf("Basic ") === -1) {
+    logger.error("header Auth missing - Unauthorized");
     return res.status(401).json({ message: "Unauthorized" });
   }
 
@@ -65,6 +77,7 @@ const pAuthCheck = async (req, res, next) => {
   let userAccCheck = await validUser(userName, pass);
 
   if (!userName || !pass || !userAccCheck) {
+    logger.error("details of user are not correct - Unauthorized");
     return res.status(401).json({
       message: "Unauthorized",
     });
@@ -74,6 +87,7 @@ const pAuthCheck = async (req, res, next) => {
     //Check if user creds match the product at id.
     let dbCheck = await dbProdVal(userName, pass,id);
     if(dbCheck) {
+      logger.error(`details of user incorrect - ${dbCheck}`);
         return res.status((dbCheck=='Forbidden')?403:404).json({
           message: dbCheck,
         });
@@ -88,6 +102,7 @@ const imAuth = async (req, res, next) => {
   const imageId = req?.params?.imageId;
   let img = await db.image.findOne({where: {image_id: imageId}});
   if(!img) {
+    logger.error("Image not found");
     return res.status(404).json({
       message: "Not Found",
     });
@@ -96,6 +111,7 @@ const imAuth = async (req, res, next) => {
   let imageObj = await db.image.findOne({where: {product_id: id, image_id: imageId}});
 
   if(!imageObj) {
+    ogger.error(`details of user incorrect - ${dbCheck}`);
     return res.status(404).json({
       message: "Not Found",
     });
@@ -176,5 +192,7 @@ module.exports = {
     getDecryptedCreds,
     pAuthCheck,
     imAuth,
-    checkFileType
+    checkFileType,
+  //  logger,
+    statsdClient
 }

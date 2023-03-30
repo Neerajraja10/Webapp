@@ -5,6 +5,8 @@ const s3 = new AWS.S3();
 const BUCKET_NAME = process.env.BUCKETNAME;
 
 const createNewProduct = async (req, res) => {
+   // helper.logger.info("POST - Product");
+    helper.statsdClient.increment('POST_product');
     if(!req.body.name || 
     !req.body.description || 
     !req.body.sku || 
@@ -56,6 +58,8 @@ const createNewProduct = async (req, res) => {
 }
 
 const putProductInfo = async (req, res) => {
+    //helper.logger.info("PUT - Product for id - ", req.params.id);
+    helper.statsdClient.increment('PUT_product');
     if(!req.body.name || 
     !req.body.description || 
     !req.body.sku || 
@@ -97,6 +101,8 @@ const putProductInfo = async (req, res) => {
 }
 
 const patchProductInfo = async (req, res) => {
+    //helper.logger.info("PATCH - Product for id - ", req.params.id);
+    helper.statsdClient.increment('PATCH_product');
     if((req.body.quantity && (req.body.quantity < 0 || typeof req.body.quantity === 'string' || req.body.quantity > 100))) {
         return res.status(400).json({
             message: "Bad request"
@@ -145,7 +151,8 @@ const patchProductInfo = async (req, res) => {
 }
 
 const deleteProduct = async (req, res) => {
-
+    //helper.logger.info("DELETE - Product for id - ", req.params.id);
+    helper.statsdClient.increment('DELETE_product');
     if(req._body) {
         return res.status(400).send("Bad Request");
     }
@@ -181,6 +188,8 @@ const deleteProduct = async (req, res) => {
 }
 
 const getProduct = async(req, res) => {
+   // helper.logger.info("GET - Product for id - ", req.params.id);
+    helper.statsdClient.increment('GET_productdetails');
     if(req._body) {
         return res.status(400).send("Bad Request");
     }
