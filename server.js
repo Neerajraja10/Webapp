@@ -3,6 +3,7 @@ var app = express();
 var bodyParser = require("body-parser");
 const methodOverride = require('method-override');
 const logger = require("./logger/loggerindex");
+const helper = require('./config/helper')
 //const SDC = require('statsd-client');
 app.use(bodyParser.json());
 
@@ -19,7 +20,7 @@ db.sequelize.sync({force: false})
 app.get('/healthz',function(req, res) {
   helper.statsdClient.increment('health_counter');
  // logger.info("/health running fine");
-    res.status(200).send(); 
+  res.status(200).send(); 
    
 });
 
