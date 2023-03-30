@@ -13,8 +13,8 @@ const db = require('./config/dbSetup');
 db.user.hasMany(db.product, {foreignKey: "owner_user_id"});
 db.product.hasMany(db.image, {foreignKey: "product_id"});
 db.sequelize.sync({force: false})
-.then(() => helper.logger.info("Database setup complete."))
-.catch((err) => helper.logger.error("Database setup failed.", err))
+.then(() => logger.info("Database setup complete."))
+.catch((err) => logger.error("Database setup failed.", err))
 
 app.get('/healthz',function(req, res) {
   helper.statsdClient.increment('health_counter');
