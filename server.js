@@ -3,6 +3,7 @@ var app = express();
 var bodyParser = require("body-parser");
 const methodOverride = require('method-override');
 const logger = require("./logger/loggerindex");
+const helper = require('./config/helper')
 //const SDC = require('statsd-client');
 app.use(bodyParser.json());
 
@@ -13,14 +14,13 @@ const db = require('./config/dbSetup');
 db.user.hasMany(db.product, {foreignKey: "owner_user_id"});
 db.product.hasMany(db.image, {foreignKey: "product_id"});
 db.sequelize.sync({force: false})
-  .then(() => console.log("Database setup complete."))
-  .catch((err) => console.log("Database setup failed.", err))
+.then(() => logger.info("Database setup complete."))
+.catch((err) => logger.error("Database setup failed.", err))
 
 app.get('/healthz',function(req, res) {
- // sdc.timing('health.timeout', start);
-  logger.info("/health running fine");
- //sdc.increment('endpoint.health');
-    res.status(200).send(); 
+  helper.statsdClient.increment('health_counter');
+ // logger.info("/health running fine");
+  res.status(200).send(); 
    
 });
 
@@ -31,5 +31,13 @@ app.use(methodOverride())
 app.use((err, req, res, next) => {
   return res.status(400).json({message: "Bad Request"});
 })
+
+process.on('terminate', () => {
+  process.on('terminate', () => {
+    // run after all terminate handlers that were added before exit
+    console.log("exit")
+    helper.statsdClient.socket.close();
+  });
+});
 
 module.exports = app;
