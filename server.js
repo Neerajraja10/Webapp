@@ -19,7 +19,7 @@ db.sequelize.sync({force: false})
 
 app.get('/healthz',function(req, res) {
   helper.statsdClient.increment('health_counter');
- // logger.info("/health running fine");
+ logger.info("/health running fine");
   res.status(200).send(); 
    
 });

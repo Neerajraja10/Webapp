@@ -3,7 +3,7 @@ const db = require('../config/dbSetup');
 const logger = require("../logger/loggerindex");
 
 const createNewUser = async ( req, res) => {
-    //helper.logger.info("POST - User");
+    logger.info("User post");
     helper.statsdClient.increment('POST_userdetails');
    
     let check = true;
@@ -108,7 +108,7 @@ const getUser = async (req, res) => {
 }
 
 const updateUser = async (req, res) => {
-    //helper.logger.info(`UPDATE - user for id - ${req.params.id}.`);
+    logger.info(`user update id- ${req.params.id}.`);
     helper.statsdClient.increment('POST_user');
     
     let check = true;
