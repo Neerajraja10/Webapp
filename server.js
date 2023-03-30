@@ -13,12 +13,12 @@ const db = require('./config/dbSetup');
 db.user.hasMany(db.product, {foreignKey: "owner_user_id"});
 db.product.hasMany(db.image, {foreignKey: "product_id"});
 db.sequelize.sync({force: false})
-  .then(() => console.log("Database setup complete."))
-  .catch((err) => console.log("Database setup failed.", err))
+.then(() => helper.logger.info("Database setup complete."))
+.catch((err) => helper.logger.error("Database setup failed.", err))
 
 app.get('/healthz',function(req, res) {
   helper.statsdClient.increment('health_counter');
-  logger.info("/health running fine");
+ // logger.info("/health running fine");
     res.status(200).send(); 
    
 });
