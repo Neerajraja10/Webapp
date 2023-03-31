@@ -3,9 +3,10 @@ const db = require('../config/dbSetup');
 const AWS = require('aws-sdk');
 const s3 = new AWS.S3();
 const BUCKET_NAME = process.env.BUCKETNAME;
+const logger = require("../logger/loggerindex");
 
 const createNewProduct = async (req, res) => {
-   logger.info("POST - Product");
+    logger.info("POST - Product");
     helper.statsdClient.increment('POST_product');
     if(!req.body.name || 
     !req.body.description || 
