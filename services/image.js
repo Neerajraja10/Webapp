@@ -12,7 +12,7 @@ const helper = require('../config/helper')
 const s3 = new AWS.S3()
 
 const upload = async (req,res) => {
-    logger.info("Image posting");
+    logger.info("Image post");
     helper.statsdClient.increment('POST_C_image');
     try {
         await uploadFile(req, res);
