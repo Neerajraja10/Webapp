@@ -6,8 +6,8 @@ const BUCKET_NAME = process.env.BUCKETNAME;
 const logger = require("../logger/loggerindex");
 
 const createNewProduct = async (req, res) => {
-    logger.info("POST - Product");
-    helper.statsdClient.increment('POST_product');
+    logger.info("Product post");
+    helper.statsdClient.increment('POST_productdetails');
     if(!req.body.name || 
     !req.body.description || 
     !req.body.sku || 
