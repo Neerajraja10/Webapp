@@ -1,8 +1,70 @@
-# Webapp Introduction
-Creating an Amazon Machine Image (AMI) using Packer and shell script
-This guide will walk you through creating an Amazon Machine Image (AMI) using Packer and shell script. The resulting AMI can be shared across Dev and Demo accounts, and used to create an EC2 instance using Terraform. Once the instance is created, you can run a Node.js and MYSQL2 Webapp and test the API requests using POSTMAN.
+# Web Application with RESTful API and IaC Deployment Guide
 
+This guide provides an overview and step-by-step instructions to deploy a web application with RESTful API endpoints using Node.js, Express, and MySQL. The deployment is done using Infrastructure as Code (IaC) principles on the AWS cloud platform. The project covers AWS setup, network configuration, continuous integration, continuous deployment, security groups, load balancer setup, autoscaling, DNS service, RDS configuration, S3 bucket setup, AMI creation, and logging/metrics implementation.
 
+## AWS Setup
+
+• Developed a web application using Node.js, Express, and MYSQL that provides RESTful API endpoints for performing CRUD 
+operations on user and product data
+• Used Terraform to provision AWS resources such as VPC, security groups, EC2, RDS, and S3 buckets
+• Implemented CI/CD pipelines using GitHub Actions for automated testing and deployment 
+• Created custom Linux AMIs using Packer for EC2 instances deployment
+• Implemented a CloudWatch alarm that triggers the launch template for auto scaling and load balancing to initiate a new 
+EC2 instance when the CPU utilization reaches 40 percent.
+• Utilized Git and GitHub for efficient code collaboration, including creating and managing repositories
+• Leveraged Git commands for branching, merging, and resolving conflicts, and utilizing GitHub features such as pull requests, 
+code reviews, and continuous integration to ensure seamless code collaboration
+this is the project overview and below are the detail of the project. Create a readme file using these details but in sequential manner. make sure to add all the important point
+AWS Setup  
+
+## Network Setup
+
+1. Created a VPC (Virtual Private Cloud).
+2. Configured an Internet Gateway for the VPC.
+3. Established public and private subnets (three each in different availability zones).
+4. Defined public and private route tables for the VPC.
+5. Attached public subnets to the public route table.
+6. Attached private subnets to the private route table.
+7. Configured a public route in the public route table:
+   - CIDR block: 0.0.0.0/0
+   - Destination target: Internet Gateway
+
+## Continuous Integration
+
+1. Utilized GitHub Actions for continuous integration.
+2. Configured workflows to run unit tests when a pull request is raised.
+3. Implemented a workflow to validate Packer builds.
+4. Enabled branch protection to ensure successful workflow execution before merging pull requests.
+5. Triggered AMI builds upon successful merge, setting up the application.
+
+## Continuous Deployment
+
+1. Created a new template version using the newly built AMI.
+2. Triggered an instance refresh command in the workflow to perform auto scaling group updates.
+
+## Security Groups
+
+1. Application Security Group:
+   - Defined an ingress rule to allow TCP traffic on port 22 (SSH) and the application port (3000).
+   - Restricted access to EC2 instances from the internet using the LoadBalancer Security Group as the source of traffic.
+2. Load Balancer Security Group:
+   - Defined an ingress rule to allow TCP traffic on port 443 (HTTPS).
+3. Database Security Group:
+   - Defined an ingress rule to allow TCP traffic on port 3306 (MySQL).
+   - Restricted access to the RDS instance from the internet using the Application Security Group as the source of traffic.
+
+## Load Balancer
+
+1. Set up a load balancer to accept HTTPS traffic on port 443 and forward it to the application instances.
+2. Attached the load balancer security group to the load balancer.
+3. Imported an SSL certificate from ZeroSSL to AWS Certificate Manager.
+4. Configured the load balancer listener with the imported SSL policy.
+
+## Autoscaling
+
+1. Created a launch template with EC2 instances configuration:
+   - Defined user data to set up environment, enable application and CloudWatch to load on boot, and configure CloudWatch.
+ 
 Visual Studio Code or any other IDE
 POSTMAN
 MySQL or any other database management system
